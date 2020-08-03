@@ -197,6 +197,10 @@ function newInstanceor(left, right) {
 // meta-view-port
 
 
+// package.json 文件里面主要内容是什么
+// 1.devdependencies  只用于开发环境 不用于生产环境
+// 2.dependencies 需要发布到生产环境
+
 // 弹框为什么使用动态组件
 
 //如果简单粗暴的每个弹窗都写一个dialog 那么会有以下问题 模版过长 且大量冗余 命名困难 每一个弹窗都要一个变量去控制显示 
