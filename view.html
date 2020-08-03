@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>面试代码</title>
+</head>
+<style>
+  .progress-container {
+    width: 800px;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, .1);
+    display: flex;
+    margin-left: 30px;
+    margin-top: 100px;
+  }
+
+  .progress {
+    height: 30px;
+    flex: 1;
+    background-color: yellow;
+    animation: mymove 2s linear;
+    -webkit-animation: mymove 2s linear;
+  }
+
+  @keyframes mymove {
+    from {
+      left: 0px;
+    }
+
+    to {
+      left: 100px;
+    }
+  }
+
+  .progress1 {
+    flex: 1;
+    height: 30px;
+    background-color: red;
+  }
+
+  .progress2 {
+    margin-left: auto;
+    height: 30px;
+    flex: 1;
+    background-color: blue;
+  }
+
+  /* 测试兄弟 */
+  .container {
+    display: flex
+  }
+
+  .item1 {
+
+    border: 1px solid red;
+    /* flex-basis: 100px;
+    flex-grow: 0;
+    flex-shrink: 2; */
+    flex: 0 2 100px;
+  }
+
+  .item2 {
+    border: 1px solid red;
+    /* flex-basis: 100px;
+    flex-grow: 0;
+    flex-shrink: 1; */
+    flex: 0 1 100px;
+  }
+
+  .item3 {
+    border: 1px solid red;
+
+    /* flex-basis: 100px;
+    flex-grow: 0;
+    flex-shrink: 1; */
+    flex: 0 1 100px;
+  }
+
+  .item4 {
+    border: 1px solid red;
+    /* 
+    flex-basis: 20px;
+    flex-grow: 3;
+    flex-shrink: 0; */
+    flex: 3 0 20px;
+  }
+
+  .item5 {
+    border: 1px solid red;
+
+    /* flex-basis: 20px;
+    flex-grow: 2;
+    flex-shrink: 0; */
+
+    flex: 2 0 20px;
+  }
+
+  .boxs {
+    height: 50px;
+    border: 1px solid red;
+    margin: 50px;
+    display: flex
+  }
+
+  .box1 {
+    border: 1px solid red;
+    flex-basis: 100px;
+    padding: 10px;
+  }
+
+  .box2 {
+    box-sizing: border-box;
+    border: 1px solid red;
+    width: 100px;
+    height: 50px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div class="boxs">
+    <div class="box1">123</div>
+    <div class="box2">3435</div>
+  </div>
+  <div class="container">
+    <div class="item1">范张</div>
+    <div class="item2">范新</div>
+    <div class="item3">范虚</div>
+    <div class="item4">范帅</div>
+    <div class="item5">范哥</div>
+  </div>
+  <div class="progress-container">
+    <div class="progress"></div>
+    <div class="progress1"></div>
+    <div class="progress2"></div>
+  </div>
+  <script>
+    function testPromise() {
+      let arr = 0
+      let next = (arr) => {
+        if (arr > 2) {
+          return
+        } else {
+          console.log(arr)
+          arr++
+        }
+      }
+      return next(arr)
+    }
+
+  </script>
+</body>
+
+</html>
