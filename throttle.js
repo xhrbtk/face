@@ -6,7 +6,7 @@ function debounce(fn, delay) {
         let context = this
         timerId = setTimeout(() => {
             fn.apply(context, arguments)
-        }, delay);
+        }, delay)
     }
 }
 
@@ -19,7 +19,7 @@ function throttle(fn, delay) {
             canUse = false
             setTimeout(() => {
                 canUse = true
-            }, delay);
+            }, delay)
         }
     }
 }
@@ -63,9 +63,6 @@ function temp() { }
 temp.prototype = Animal.prototype
 Dog.prototype = new temp()
 
-
-
-
 // class 实现
 class Animal {
     constructor(color) {
@@ -98,7 +95,6 @@ function delegate(element, eventType, selector, fn) {
     return element
 }
 
-
 // 浅拷贝
 function shallowClone(source) {
     let target = {}
@@ -117,7 +113,13 @@ function deepClone(obj) {
         // 判断obj是否有key这个自有属性
         if (obj.hasOwnProperty(key)) {
             // 基本类型
-            if (typeof obj[key] === 'string' || typeof obj[key] === 'number' || typeof obj[key] === 'null' || typeof obj[key] === 'undefined' || typeof obj[key] === 'boolean') {
+            if (
+                typeof obj[key] === 'string' ||
+                typeof obj[key] === 'number' ||
+                typeof obj[key] === 'null' ||
+                typeof obj[key] === 'undefined' ||
+                typeof obj[key] === 'boolean'
+            ) {
                 newobj[key] = obj[key]
             } else {
                 // 多层潜逃的引用类型
@@ -128,13 +130,12 @@ function deepClone(obj) {
     return newobj
 }
 
-
 // ts 提供了类型约束 因此更可控 更容易重构 更适合大型项目 更容易维护
 
-// xss攻击 
+// xss攻击
 // 恶意用户可以提交内容 提交的内容可以显示在另一个用户的页面上 这些内容未经过滤 直接运行在另一个用户的页面上
-// csrf 
-// 跨站请求伪造 利用后台有规律的接口 攻击者在被攻击的网站页面潜入代码 
+// csrf
+// 跨站请求伪造 利用后台有规律的接口 攻击者在被攻击的网站页面潜入代码
 // 客户端防范 对于数据库的修改请求 全部使用post 禁止使用get请求 服务器端防范：在表单里面添加一段隐藏的唯一的token
 
 // 基本数据类型  undefined null boolean string number
@@ -146,10 +147,9 @@ function deepClone(obj) {
 // typeof null 为啥是object  因为这是js的bug js在底层存储变量的时候 会在变量的机器码的低位1-3位存储其类型信息 对于undefined 和null来说 这两个信息
 //是有点特殊的 null 所有机器码均为0 undefined 用-2^30 整数来表示 typeof 判断null的时候就 出问题了
 
-
 // instanceof的原理及重写
-// instanceof 实现的主要原理就是只要右边变量的prototype在左边变量的原型链上即可 
-//因此 instanceof 在查找的过程中会遍历左边变量的原型链 直到找到右边变量的prototype 
+// instanceof 实现的主要原理就是只要右边变量的prototype在左边变量的原型链上即可
+//因此 instanceof 在查找的过程中会遍历左边变量的原型链 直到找到右边变量的prototype
 // 如果查找失败 则会返回false 告诉我们左边变量并非是右边变量的实例
 
 function newInstanceor(left, right) {
@@ -171,13 +171,11 @@ function newInstanceor(left, right) {
 // 某些方面类似于Number 但是也有不同点：不能用于Math对象中的方法 不能和任何Number实例混合运算
 // 两者必须转换同一种类型 BigInt变量在转换成为Numbe变量时可能会丢失精读
 
-
-
 // 项目中你都会使用哪些办法为啥
 //如果让你封装一个toType检测类型你会怎么写
 // 检测是数组或者类数组以及纯粹的对象你会怎么做  检测类数组使用Object.prototype.toString.call() ===> [object Arguments]
 
-// es5实现继承 继承的优缺点 
+// es5实现继承 继承的优缺点
 // es6 set的使用
 // new 一个对象的过程 (es6 es5 原型链)
 // 1.创建一个新对象
@@ -185,19 +183,23 @@ function newInstanceor(left, right) {
 // 3. 使用新对象调用函数 函数中this被指向新实例对象
 // 4. 将初始化完毕的新对象地址 保存到等号左边的变量中
 
-
-// 好未来面试
 // vue-router 的 hash 和 history 模式 底部实现原理是什么
 // hash 原生事件 是 hashchange
 // history模式 原生事件是 popstate
+// history.pushState() 相比雨直接修改has 存在以下优势
+//pushState() 设置的新 URL 可以是与当前 URL 同源的任意 URL；
+//而 hash 只可修改 # 后面的部分，因此只能设置与当前 URL 同文档的 URL；
+//pushState() 设置的新 URL 可以与当前 URL 一模一样，这样也会把记录添加到栈中；
+//而 hash 设置的新值必须与原来不一样才会触发动作将记录添加到栈中；pushState() 通过 stateObject 参数可以添加任意类型的数据到记录中；
+//而 hash 只可添加短字符串；pushState() 可额外设置 title 属性供后续使用。
+
+//hash 模式下，仅 hash 符号之前的内容会被包含在请求中，如 http://www.abc.com，因此对于后端来说，即使没有做到对路由的全覆盖，也不会返回 404 错误。history 模式下，前端的 URL 必须和实际向后端发起请求的 URL 一致，如 http://www.abc.com/book/id。如果后端缺少对 /book/id 的路由处理，将返回 404 错误。Vue-Router 官网里如此描述：“不过这种模式要玩好，还需要后台配置支持……所以呢，你要在服务端增加一个覆盖所有情况的候选资源：如果 URL 匹配不到任何静态资源，则应该返回同一个 index.html 页面，这个页面就是你 app 依赖的页面。
 
 // vue 单页面应用 和 多页面应用 优缺点： 只有一张Web页面的应用，是一种从Web服务器加载的富客户端，单页面跳转仅刷新局部资源 ，公共资源(js、css等)仅需加载一次，常用于PC端官网、购物等网站
 // 多页面跳转刷新所有资源，每个公共资源(js、css等)需选择性重新加载，常用于 app 或 客户端等
 
-
 // jsbridge 的实现原理
 // meta-view-port
-
 
 // package.json 文件里面主要内容是什么
 // 1.devdependencies  只用于开发环境 不用于生产环境
@@ -205,14 +207,21 @@ function newInstanceor(left, right) {
 
 // 弹框为什么使用动态组件
 
-//如果简单粗暴的每个弹窗都写一个dialog 那么会有以下问题 模版过长 且大量冗余 命名困难 每一个弹窗都要一个变量去控制显示 
-
+//如果简单粗暴的每个弹窗都写一个dialog 那么会有以下问题 模版过长 且大量冗余 命名困难 每一个弹窗都要一个变量去控制显示
 
 // npm package.json 的结构 及作用
 // vue原理
 // 写组件的收获
 // 版本管理
 
+var _new = function () {
+    let Constructor = [].shift.call(arguments)
+    let args = arguments
+    const obj = new Object()
+    obj.__proto__ = Constructor.prototype
+    Constructor.call(obj, ...args)
+    return obj
+}
 
 
 // webpack 
@@ -222,15 +231,15 @@ function newInstanceor(left, right) {
 // 哪些是依赖
 //哪些是源码  es6 jsx 需要编译 --》》 浏览器能够执行
 // 分析其他模块
- // 拿到数据结构 模块路径 处理好的内容  
- // 创建bundle.js 启动器函数 来补充代码里有可能出现的module export require 让浏览器能够顺利的执行
+// 拿到数据结构 模块路径 处理好的内容  
+// 创建bundle.js 启动器函数 来补充代码里有可能出现的module export require 让浏览器能够顺利的执行
 
 
- // loader 自己编写一个
- // loader就是一个函数 声明函数 不能用箭头函数 拿到源代码 作进一步的修饰处理 再返回处理后的源码就可以了
- // this.async:如果loader⾥里里⾯面有异步的事情要怎么处理理呢
- //定义⼀一个异步处理理，告诉webpack,这个loader⾥里里有异步事件,在⾥里里⾯面调⽤用下这个异步 //callback 就是 this.callback 注意参数的使⽤用
- // 顺序 是 自下而上 自左到右
+// loader 自己编写一个
+// loader就是一个函数 声明函数 不能用箭头函数 拿到源代码 作进一步的修饰处理 再返回处理后的源码就可以了
+// this.async:如果loader⾥里里⾯面有异步的事情要怎么处理理呢
+//定义⼀一个异步处理理，告诉webpack,这个loader⾥里里有异步事件,在⾥里里⾯面调⽤用下这个异步 //callback 就是 this.callback 注意参数的使⽤用
+// 顺序 是 自下而上 自左到右
 
 //  Plugin
 
@@ -240,3 +249,9 @@ function newInstanceor(left, right) {
 
 
 
+// Object.create()  方法创建新一个新的对象 使用现有的对象来提供创建对象的__proto__
+function _new(fn, ...args) {
+    const obj = Object.create(fn.prototype)
+    const ret = fn.apply(obj, arg)
+    return ret instanceof Object ? ret : obj
+}
