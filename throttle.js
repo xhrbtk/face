@@ -255,3 +255,17 @@ function _new(fn, ...args) {
     const ret = fn.apply(obj, arg)
     return ret instanceof Object ? ret : obj
 }
+
+
+
+// Proxy 跟 Object.defineProperty 的对比
+
+// 优点：
+
+// 不需要递归遍历每个属性，添加劫持，深层对象属性只有在访问的时候才转换成 Proxy
+
+// 对新增的属性不需要另外做劫持处理
+
+// 不需要对数组的方法进行重定义
+
+// 缺点： 不兼容 ie
