@@ -84,23 +84,6 @@ function selectSort(arr) {
 
 // 快排
 function quickSort(arr) {
-    if (arr.length <= 1) return arr
-    let pivotIndex = Math.floor(arr.length / 2)
-    let pivot = arr.splice(pivotIndex, 1)[0]
-    let left = []
-    let right = []
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] < pivot) {
-            left.push(arr[i])
-        } else {
-            right.push(arr[i])
-        }
-    }
-    return quickSort(left).concat([pivot], quickSort(right))
-}
-
-
-function quickSort(arr) {
     let len = arr.length
     let pivotIndex = Math.floor(len / 2)
     let pivot = arr[pivotIndex]
@@ -146,28 +129,7 @@ var EventCenter = (function () {
 })()
 
 
-// 发布订阅模式
-let eventCenter = (function () {
-    let events = {}
-    function on(evt, handler) {
-        events[evt] = events[evt] || []
-        events[evt].push({ handler: handler })
-    }
-    function fire(evt, args) {
-        if (events[evt]) return
-        for (let i = 0; i < events[evt].length; i++) {
-            events[evt].handler(args)
-        }
-    }
-    function off(name) {
-        delete events[nam]
-    }
-    return {
-        on,
-        fire,
-        off
-    }
-})()
+
 
 // new 的实现
 function objectfactory() {
@@ -195,3 +157,16 @@ Function.prototype.call2 = function (context) {
     delete context.fn
     return result
 }
+
+
+
+function newInstance(left, right) {
+    let leftVal = left.__proto__
+    let rightVal = right.prototype
+    while (true) {
+        if (leftVal == null) return false
+        if (leftVal == rightVal) return true
+        leftVal = leftVal.__proto__
+    }
+}
+

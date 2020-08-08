@@ -164,6 +164,8 @@ function newInstanceor(left, right) {
 
 
 
+
+
 // Symbol和bigint的特殊性
 // BigInt 是一种内置对象 它提供了一种方法表示大于2^53 -1的整数 BigInt可以表示任意大的整数
 // 某些方面类似于Number 但是也有不同点：不能用于Math对象中的方法 不能和任何Number实例混合运算
@@ -210,6 +212,31 @@ function newInstanceor(left, right) {
 // vue原理
 // 写组件的收获
 // 版本管理
+
+
+
+// webpack 
+//接收一份配置 
+// 分析出入口模块位置
+//读取入口模块的内容 分析内容
+// 哪些是依赖
+//哪些是源码  es6 jsx 需要编译 --》》 浏览器能够执行
+// 分析其他模块
+ // 拿到数据结构 模块路径 处理好的内容  
+ // 创建bundle.js 启动器函数 来补充代码里有可能出现的module export require 让浏览器能够顺利的执行
+
+
+ // loader 自己编写一个
+ // loader就是一个函数 声明函数 不能用箭头函数 拿到源代码 作进一步的修饰处理 再返回处理后的源码就可以了
+ // this.async:如果loader⾥里里⾯面有异步的事情要怎么处理理呢
+ //定义⼀一个异步处理理，告诉webpack,这个loader⾥里里有异步事件,在⾥里里⾯面调⽤用下这个异步 //callback 就是 this.callback 注意参数的使⽤用
+ // 顺序 是 自下而上 自左到右
+
+//  Plugin
+
+
+
+
 
 
 
