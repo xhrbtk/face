@@ -50,9 +50,12 @@
 // 注意: beforeMount红色矩形框里是{{message}},mounted的红矩形框里是xuxiao is boy,说明挂载前$el的值为'虚拟'的元素节点,挂载后'虚拟'的Dom节点被真实的Dom节点替换
 
 
-// vuex
+// vuex 的响应式 使用了重新new vue处理
 // 父子传值
 // 二叉树遍历
 // flex属性
 // ast
-// webpack
+// webpack   babel/parser 将从webpack入口文件读取的内容转换为ast @babel/travers是一个对ast进行遍历的工具lei si  @babel/core的transformFromAst将ast 从es6转换为es5
+// 对于某些不能做转换的使用 @babel/polyfill进行处理
+//  虽然做了语法翻译，但只是一部分。在低版本浏览器还是没有比如Promise、数组的map等。所以不仅要使用@babel/preset-env进行ES6转ES5，还要借助 @babel/polyfill把缺失的变量或者函数补充到低版本的浏览器里。
+
