@@ -1,7 +1,7 @@
 // 防抖
 function debounce(fn, delay) {
     let timerId = null
-    return function () {
+    return function() {
         if (timerId) clearTimeout(timerId)
         let context = this
         timerId = setTimeout(() => {
@@ -13,7 +13,7 @@ function debounce(fn, delay) {
 // 节流
 function throttle(fn, delay) {
     let canUse = true
-    return function () {
+    return function() {
         if (canUse) {
             fn.apply(this, arguments)
             canUse = false
@@ -28,7 +28,7 @@ function throttle(fn, delay) {
 let xhr = new XMLHttpRequest()
 xhr.open('GET', url, true)
 // true 表示异步请求 false 表示同步请求
-xhr.onreadystatechange = function () {
+xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
         // readyState 0 未初始化 尚未调用open方法
         // 1 启动 一句调用open方法 但是未调用 send方法
@@ -51,7 +51,7 @@ function trim(string) {
 function Animal(color) {
     this.color = color
 }
-Animal.prototype.move = function () { }
+Animal.prototype.move = function() {}
 
 function Dog(color, name) {
     Animal.call(this, color)
@@ -59,7 +59,7 @@ function Dog(color, name) {
 }
 
 // Dog.prototype.__proto__ = Animal.prototype
-function temp() { }
+function temp() {}
 temp.prototype = Animal.prototype
 Dog.prototype = new temp()
 
@@ -68,7 +68,7 @@ class Animal {
     constructor(color) {
         this.color = color
     }
-    move() { }
+    move() {}
 }
 
 class Dog extends Animal {
@@ -135,6 +135,7 @@ function deepClone(obj) {
 // xss攻击
 // 恶意用户可以提交内容 提交的内容可以显示在另一个用户的页面上 这些内容未经过滤 直接运行在另一个用户的页面上
 // csrf
+// 攻击者盗用了你的身份，以你的名义发送恶意请求。CSRF能够做的事情包括：以你名义发送邮件，发消息，盗取你的账号，甚至于购买商品，虚拟货币转账......造成的问题包括：个人隐私泄露以及财产安全。
 // 跨站请求伪造 利用后台有规律的接口 攻击者在被攻击的网站页面潜入代码
 // 客户端防范 对于数据库的修改请求 全部使用post 禁止使用get请求 服务器端防范：在表单里面添加一段隐藏的唯一的token
 
@@ -161,10 +162,6 @@ function newInstanceor(left, right) {
         leftVal = leftVal.__proto__
     }
 }
-
-
-
-
 
 // Symbol和bigint的特殊性
 // BigInt 是一种内置对象 它提供了一种方法表示大于2^53 -1的整数 BigInt可以表示任意大的整数
@@ -215,7 +212,7 @@ function newInstanceor(left, right) {
 // 写组件的收获
 // 版本管理
 
-var _new = function () {
+var _new = function() {
     let Constructor = [].shift.call(arguments)
     let args = arguments
     const obj = new Object()
@@ -224,17 +221,15 @@ var _new = function () {
     return obj
 }
 
-
-// webpack 
-//接收一份配置 
+// webpack
+//接收一份配置
 // 分析出入口模块位置
 //读取入口模块的内容 分析内容
 // 哪些是依赖
 //哪些是源码  es6 jsx 需要编译 --》》 浏览器能够执行
 // 分析其他模块
-// 拿到数据结构 模块路径 处理好的内容  
+// 拿到数据结构 模块路径 处理好的内容
 // 创建bundle.js 启动器函数 来补充代码里有可能出现的module export require 让浏览器能够顺利的执行
-
 
 // loader 自己编写一个
 // loader就是一个函数 声明函数 不能用箭头函数 拿到源代码 作进一步的修饰处理 再返回处理后的源码就可以了
@@ -244,20 +239,12 @@ var _new = function () {
 
 //  Plugin
 
-
-
-
-
-
-
 // Object.create()  方法创建新一个新的对象 使用现有的对象来提供创建对象的__proto__
 function _new(fn, ...args) {
     const obj = Object.create(fn.prototype)
     const ret = fn.apply(obj, arg)
     return ret instanceof Object ? ret : obj
 }
-
-
 
 // Proxy 跟 Object.defineProperty 的对比
 

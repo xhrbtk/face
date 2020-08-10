@@ -47,12 +47,12 @@ function multi(a, b, c, d) {
 }
 function curry(fn) {
     let arr = []
-    let ceshi = function () {
+    let ceshi = function() {
         if (arguments.length === fn.length) {
             return fn.apply(null, arguments)
         } else {
             arr = arr.concat([].slice.call(arguments))
-            if ((arr.length == fn.length)) {
+            if (arr.length == fn.length) {
                 let result = fn.apply(null, arr)
                 arr = []
                 return result
@@ -72,7 +72,7 @@ function selectSort(arr) {
         minIndex = i
         for (let j = i + 1; j < len; j++) {
             if (arr[minIndex] < arr[j]) {
-                minIndex  j
+                minIndex = j
             }
         }
         temp = arr[i]
@@ -99,15 +99,14 @@ function quickSort(arr) {
     return quickSort(left).concat([pivot], quickSort(right))
 }
 
-
 // 发布订阅模式
 
-var EventCenter = (function () {
+var EventCenter = (function() {
     var events = {}
     function on(evt, handler) {
         events[evt] = events[evt] || []
         events[evt].push({
-            handler: handler
+            handler: handler,
         })
     }
     function fire(evt, args) {
@@ -124,12 +123,9 @@ var EventCenter = (function () {
     return {
         on: on,
         fire: fire,
-        off: off   //取消订阅
+        off: off, //取消订阅
     }
 })()
-
-
-
 
 // new 的实现
 function objectfactory() {
@@ -143,9 +139,8 @@ function objectfactory() {
     return typeof ret === 'object' ? ret : obj
 }
 
-
-// call 
-Function.prototype.call2 = function (context) {
+// call
+Function.prototype.call2 = function(context) {
     let context = context || window
     context.fn = this
     let args = []
@@ -158,7 +153,24 @@ Function.prototype.call2 = function (context) {
     return result
 }
 
+Function.prototype.apply2 = function(context, arr) {
+    var context = Object(context) || window
+    context.fn = this
 
+    var result
+    if (!arr) {
+        result = context.fn()
+    } else {
+        var args = []
+        for (var i = 0, len = arr.length; i < len; i++) {
+            args.push('arr[' + i + ']')
+        }
+        result = eval('context.fn(' + args + ')')
+    }
+
+    delete context.fn
+    return result
+}
 
 function newInstance(left, right) {
     let leftVal = left.__proto__
@@ -169,4 +181,3 @@ function newInstance(left, right) {
         leftVal = leftVal.__proto__
     }
 }
-
