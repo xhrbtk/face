@@ -7,7 +7,7 @@
 //     left: 0;
 //     width: 200%;
 //     transform: scale(0.5);
-//     transform-origin: left top;
+//     transform-origin: left top;   // transform-origin 属性可以使用1个 两个 或者 3个值 来指定 其中每个值都表示一个偏移量
 //     box-sizing: border-box;
 //     z-index: 990;
 //     border: 1px solid #e5e5e5;
