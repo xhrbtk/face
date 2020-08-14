@@ -118,7 +118,8 @@ function deepClone(obj) {
                 typeof obj[key] === 'number' ||
                 typeof obj[key] === 'null' ||
                 typeof obj[key] === 'undefined' ||
-                typeof obj[key] === 'boolean'
+                typeof obj[key] === 'boolean' ||
+                typeof obj[key] === 'symbol'
             ) {
                 newobj[key] = obj[key]
             } else {
@@ -139,7 +140,7 @@ function deepClone(obj) {
 // 跨站请求伪造 利用后台有规律的接口 攻击者在被攻击的网站页面潜入代码
 // 客户端防范 对于数据库的修改请求 全部使用post 禁止使用get请求 服务器端防范：在表单里面添加一段隐藏的唯一的token
 
-// 基本数据类型  undefined null boolean string number
+// 基本数据类型  undefined null boolean string number symbol
 
 // 数据类型检测方法 四种方式的区别 1、typeof 2. instanceof 用于检测引用类型 可以检测到是什么类型的实例 3.Object.prototype.toString.call(obj)
 // typeof 判断null的时候 和 instanceof 判断null的时候会出错
@@ -175,7 +176,7 @@ function newInstanceor(left, right) {
 // es5实现继承 继承的优缺点
 // es6 set的使用
 // new 一个对象的过程 (es6 es5 原型链)
-// 1.创建一个新对象
+// 1. 创建一个新对象
 // 2. 设置新对象的constructor 属性为构造函数的名称 设置新对象的__proto__属性指向构造函数的prototype对象
 // 3. 使用新对象调用函数 函数中this被指向新实例对象
 // 4. 将初始化完毕的新对象地址 保存到等号左边的变量中
@@ -183,7 +184,7 @@ function newInstanceor(left, right) {
 // vue-router 的 hash 和 history 模式 底部实现原理是什么
 // hash 原生事件 是 hashchange
 // history模式 原生事件是 popstate
-// history.pushState() 相比雨直接修改has 存在以下优势
+// history.pushState() 相比雨直接修改hash 存在以下优势
 //pushState() 设置的新 URL 可以是与当前 URL 同源的任意 URL；
 //而 hash 只可修改 # 后面的部分，因此只能设置与当前 URL 同文档的 URL；
 //pushState() 设置的新 URL 可以与当前 URL 一模一样，这样也会把记录添加到栈中；
