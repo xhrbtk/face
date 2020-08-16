@@ -1,7 +1,7 @@
 // 防抖
 function debounce(fn, delay) {
     let timerId = null
-    return function() {
+    return function () {
         if (timerId) clearTimeout(timerId)
         let context = this
         timerId = setTimeout(() => {
@@ -13,7 +13,7 @@ function debounce(fn, delay) {
 // 节流
 function throttle(fn, delay) {
     let canUse = true
-    return function() {
+    return function () {
         if (canUse) {
             fn.apply(this, arguments)
             canUse = false
@@ -28,7 +28,7 @@ function throttle(fn, delay) {
 let xhr = new XMLHttpRequest()
 xhr.open('GET', url, true)
 // true 表示异步请求 false 表示同步请求
-xhr.onreadystatechange = function() {
+xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
         // readyState 0 未初始化 尚未调用open方法
         // 1 启动 一句调用open方法 但是未调用 send方法
@@ -51,7 +51,7 @@ function trim(string) {
 function Animal(color) {
     this.color = color
 }
-Animal.prototype.move = function() {}
+Animal.prototype.move = function () { }
 
 function Dog(color, name) {
     Animal.call(this, color)
@@ -59,7 +59,7 @@ function Dog(color, name) {
 }
 
 // Dog.prototype.__proto__ = Animal.prototype
-function temp() {}
+function temp() { }
 temp.prototype = Animal.prototype
 Dog.prototype = new temp()
 
@@ -68,7 +68,7 @@ class Animal {
     constructor(color) {
         this.color = color
     }
-    move() {}
+    move() { }
 }
 
 class Dog extends Animal {
@@ -216,7 +216,7 @@ function newInstanceor(left, right) {
 // 写组件的收获
 // 版本管理
 
-var _new = function() {
+var _new = function () {
     let Constructor = [].shift.call(arguments)
     let args = arguments
     const obj = new Object()
@@ -255,10 +255,11 @@ function _new(fn, ...args) {
 // 优点：
 
 // 不需要递归遍历每个属性，添加劫持，深层对象属性只有在访问的时候才转换成 Proxy
-
 // 对新增的属性不需要另外做劫持处理
-
 // 不需要对数组的方法进行重定义
+// Object.defineProperty无法监控到数组下标的变化，导致通过数组下标添加元素，不能实时响应；
+// Object.defineProperty只能劫持对象的属性，从而需要对每个对象，每个属性进行遍历，如果，属性值是对象，还需要深度遍历。Proxy可以劫持整个对象，并返回一个新的对象。
+// Proxy不仅可以代理对象，还可以代理数组。还可以代理动态增加的属性。
 
 // 缺点： 不兼容 ie
 
