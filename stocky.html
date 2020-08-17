@@ -1,66 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style lang="css">
+        article {
+            max-width: 600px;
+            margin: 1em auto;
+        }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style lang="css">
-    article {
-        max-width: 600px;
-        margin: 1em auto;
-    }
+        article h4,
+        article footer {
+            position: -webkit-sticky;
+            /* for Safari */
+            position: sticky;
+        }
 
-    article h4,
-    article footer {
-        position: -webkit-sticky;
-        /* for Safari */
-        position: sticky;
-    }
+        article h4 {
+            margin: 2em 0 0;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            top: 0;
+            z-index: 1;
+        }
 
-    article h4 {
-        margin: 2em 0 0;
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-        top: 0;
-        z-index: 1;
-    }
+        article content {
+            display: block;
+            background-color: #ffffe0;
+            position: relative;
+            padding: 1px 10px;
+        }
 
-    article content {
-        display: block;
-        background-color: #ffffe0;
-        position: relative;
-        padding: 1px 10px;
-    }
+        article footer {
+            background-color: #f0f3f9;
+            padding: 10px;
+            bottom: 50vh;
+            z-index: -1;
+        }
+        .test{
+            width: 30px;
+            height: 30px;
+            position: relative;
+            border-top: none;
+            /* border: 1px solid red; */
+        }
+        .test:after{
+            content: '';
+            position: absolute;
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            border: 1px solid #000;
+            transform: scale(0.5);
+            transform-origin: top left;
+         }
+    </style>
 
-    article footer {
-        background-color: #f0f3f9;
-        padding: 10px;
-        bottom: 50vh;
-        z-index: -1;
-    }
-</style>
-
-<body>
-    <article>
-        <section>
-            <h4>网曝王宝强殴打马蓉</h4>
-            <content>
-                <p>12月2日，有网友爆料称...</p>
-            </content>
-            <footer>网友评论：...</footer>
-        </section>
-        <section>
-            <h4>知情人爆料称马蓉闯入王宝强家拿剪刀对峙</h4>
-            <content>
-                <p>...</p>
-            </content>
-            <footer>网友评论：...</footer>
-        </section>
-        ...
-    </article>
-</body>
-
+    <body>
+        <article>
+            <section>
+                <h4>网曝王宝强殴打马蓉</h4>
+                <content>
+                    <p>12月2日，有网友爆料称...</p>
+                </content>
+                <footer>网友评论：...</footer>
+            </section>
+            <section>
+                <h4>知情人爆料称马蓉闯入王宝强家拿剪刀对峙</h4>
+                <content>
+                    <p>...</p>
+                </content>
+                <footer>网友评论：...</footer>
+            </section>
+            ...
+        </article>
+        <!-- 四边 -->
+        <div class="test"></div>
+    </body>
 </html>
