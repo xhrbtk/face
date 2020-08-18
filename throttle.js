@@ -10,6 +10,8 @@ function debounce(fn, delay) {
     }
 }
 
+
+
 // 节流
 function throttle(fn, delay) {
     let canUse = true
@@ -42,9 +44,13 @@ xhr.onreadystatechange = function () {
 }
 xhr.send()
 
+
+
+
 // 用正则实现trim
 function trim(string) {
     return string.replace(/^\s+|\s+$/g, '')
+
 }
 
 // class

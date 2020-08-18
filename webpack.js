@@ -39,3 +39,12 @@
 // 通过 esprima 把源码转化为AST
 // 通过 estraverse 遍历并更新AST
 // 通过 escodegen 将AST重新生成源码
+
+// Cookie V.S. LocalStorage
+// 主要区别是 Cookie 会被发送到服务器，而 LocalStorage 不会
+// Cookie 一般最大 4k，LocalStorage 可以用 5Mb 甚至 10Mb（各浏览器不同）
+// LocalStorage V.S. SessionStorage
+// LocalStorage 一般不会自动过期（除非用户手动清除），而 SessionStorage 在回话结束时过期（如关闭浏览器）
+// Cookie V.S. Session
+// Cookie 存在浏览器的文件里，Session 存在服务器的文件里
+// Session 是基于 Cookie 实现的，具体做法就是把 SessionID 存在 Cookie 里
