@@ -6,8 +6,8 @@ function bubbleSort(arr) {
         for (let j = 0; j < arr.length - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 let temp = arr[j]
-                arr[j + 1] = arr[j]
-                arr[j] = temp
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
             }
         }
     }
@@ -23,7 +23,7 @@ function binarySearch(arr, target) {
     let right = arr.length - 1
 
     while (left <= right) {
-        let mid = parseInt((left + right) / 2)
+        let mid = Math.floor((left + right) / 2)
         if (target < mid) {
             right = mid
         } else if (target > mid) {
@@ -47,7 +47,7 @@ function multi(a, b, c, d) {
 }
 function curry(fn) {
     let arr = []
-    let ceshi = function() {
+    let ceshi = function () {
         if (arguments.length === fn.length) {
             return fn.apply(null, arguments)
         } else {
@@ -86,13 +86,13 @@ function selectSort(arr) {
 function quickSort(arr) {
     let len = arr.length
     let pivotIndex = Math.floor(len / 2)
-    let pivot = arr[pivotIndex]
+    let pivot = arr.splice(pivotIndex, 1)[0]
     let left = []
     let right = []
     for (let i = 0; i < len; i++) {
         if (arr[i] > pivot) {
             right.push(arr[i])
-        } else if (arr[i] < pivot) {
+        } else {
             left.push(arr[i])
         }
     }
@@ -101,7 +101,7 @@ function quickSort(arr) {
 
 // 发布订阅模式
 
-var EventCenter = (function() {
+var EventCenter = (function () {
     var events = {}
     function on(evt, handler) {
         events[evt] = events[evt] || []
@@ -140,7 +140,7 @@ function objectfactory() {
 }
 
 // call
-Function.prototype.call2 = function(context) {
+Function.prototype.call2 = function (context) {
     let context = context || window
     context.fn = this
     let args = []
@@ -153,7 +153,7 @@ Function.prototype.call2 = function(context) {
     return result
 }
 
-Function.prototype.apply2 = function(context, arr) {
+Function.prototype.apply2 = function (context, arr) {
     var context = Object(context) || window
     context.fn = this
 
@@ -181,3 +181,7 @@ function newInstance(left, right) {
         leftVal = leftVal.__proto__
     }
 }
+
+
+
+
