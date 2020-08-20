@@ -1,7 +1,7 @@
 // 防抖
 function debounce(fn, delay) {
     let timerId = null
-    return function () {
+    return function() {
         if (timerId) clearTimeout(timerId)
         let context = this
         timerId = setTimeout(() => {
@@ -10,12 +10,10 @@ function debounce(fn, delay) {
     }
 }
 
-
-
 // 节流
 function throttle(fn, delay) {
     let canUse = true
-    return function () {
+    return function() {
         if (canUse) {
             fn.apply(this, arguments)
             canUse = false
@@ -30,7 +28,7 @@ function throttle(fn, delay) {
 let xhr = new XMLHttpRequest()
 xhr.open('GET', url, true)
 // true 表示异步请求 false 表示同步请求
-xhr.onreadystatechange = function () {
+xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
         // readyState 0 未初始化 尚未调用open方法
         // 1 启动 一句调用open方法 但是未调用 send方法
@@ -44,20 +42,16 @@ xhr.onreadystatechange = function () {
 }
 xhr.send()
 
-
-
-
 // 用正则实现trim
 function trim(string) {
     return string.replace(/^\s+|\s+$/g, '')
-
 }
 
 // class
 function Animal(color) {
     this.color = color
 }
-Animal.prototype.move = function () { }
+Animal.prototype.move = function() {}
 
 function Dog(color, name) {
     Animal.call(this, color)
@@ -65,7 +59,7 @@ function Dog(color, name) {
 }
 
 // Dog.prototype.__proto__ = Animal.prototype
-function temp() { }
+function temp() {}
 temp.prototype = Animal.prototype
 Dog.prototype = new temp()
 
@@ -74,7 +68,7 @@ class Animal {
     constructor(color) {
         this.color = color
     }
-    move() { }
+    move() {}
 }
 
 class Dog extends Animal {
@@ -222,7 +216,7 @@ function newInstanceor(left, right) {
 // 写组件的收获
 // 版本管理
 
-var _new = function () {
+var _new = function() {
     let Constructor = [].shift.call(arguments)
     let args = arguments
     const obj = new Object()
@@ -294,3 +288,18 @@ function _new(fn, ...args) {
 // 垃圾回收
 // 标记清除 垃圾收集器在运行的时候会给存储在内存中的所有变量都加上标记 然后它会去掉环境中的变量已经被 环境变量标记为引用变量在此之后 再被标记的变量 将被是为准备删除的变量
 // 引用记数 每次引用加1 被释放时减一 当这个值的引用次数变成0 时 就可以将其内存空间回收 缺点 循环引用(obj1 和 obj2 通过格子属性相互引用 这两个对象的引用次数都是2)
+
+const newObj = new Proxy(obj, {
+    get: function(target, key, receiver) {
+        console.log(`getting ${key}!`)
+        return Reflect.get(target, key, receiver)
+    },
+    set: function(target, key, value, receiver) {
+        console.log(target, key, value, receiver)
+        if (key === 'text') {
+            input.value = value
+            p.innerHTML = value
+        }
+        return Reflect.set(target, key, value, receiver)
+    },
+})
