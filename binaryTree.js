@@ -19,7 +19,6 @@ function preOrderTraversal(node) {
     }
 }
 
-
 // 中序遍历
 function middleOrder(node) {
     if (node) {
@@ -67,9 +66,6 @@ function postOrderTraversal(node) {
     return res.reverse()
 }
 
-
-
-
 // 先序遍历 非递归 根 左 右
 function preOrderTraversal(node) {
     let stack = []
@@ -96,8 +92,6 @@ function postOrderTraversal(node) {
     return res.reverse() // 输出左右根
 }
 
-
-
-// 数组和链表的区别 
-// 在内存中 数组是一块连续的区域 数组需要预留空间 在使用前先申请内存大小 可能会浪费内存空间 插入数据和删除数据效率低 随机读取效率搞 
+// 数组和链表的区别
+// 在内存中 数组是一块连续的区域 数组需要预留空间 在使用前先申请内存大小 可能会浪费内存空间 插入数据和删除数据效率低 随机读取效率搞
 // 在内存中恶意存在任何地方 不要求连续 增删容易 查找数据效率低
