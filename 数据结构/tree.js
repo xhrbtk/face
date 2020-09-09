@@ -7,11 +7,10 @@ function BinarySearchTree() {
         this.right = null
         console.log('this.key', this.key)
     }
+    var root = null
     this.insert = function(key) {
         console.log('我在insert', key)
         var newNode = new Node(key)
-        console.log('newNode', newNode)
-        console.log('root', root)
         if (!root) {
             root = newNode
             console.log('root', root.key)
@@ -29,6 +28,7 @@ function BinarySearchTree() {
         } else {
             if (node.right == null) {
                 node.right = newNode
+                console.log('node---', node)
             } else {
                 insertNode(node.rigth, newNode)
             }
@@ -36,14 +36,56 @@ function BinarySearchTree() {
     }
 }
 
-var tree = new BinarySearchTree()
-tree.insert(1)
-// tree.insert(2)
-// tree.insert(0)
+function Node(key) {
+    this.key = key
+    this.left = null
+    this.right = null
+}
 
-// function preOrder(node) {
-//     console.log(node)
-//     preOrder(node.left)
-//     preOrder(node.right)
-// }
-// preOrder(1)
+class BinarySearchTree1 {
+    constructor() {
+        this.root = null
+    }
+    insert(key) {
+        let newNode = new Node(key)
+        if (!this.root) {
+            this.root = newNode
+        } else {
+            this.insertNode(this.root, newNode)
+        }
+    }
+    insertNode(node, newNode) {
+        // 从小到大 左根右
+        if (newNode.key > node.key) {
+            if (node.right == null) {
+                node.right = newNode
+                console.log('---root---right', this.root)
+            } else {
+                this.insertNode(node.right, newNode)
+            }
+        } else {
+            if (node.left == null) {
+                node.left = newNode
+                console.log('---root---left', this.root)
+            } else {
+                this.insertNode(node.left, newNode)
+            }
+        }
+    }
+}
+
+var tree1 = new BinarySearchTree1()
+tree1.insert(11)
+tree1.insert(7)
+tree1.insert(15)
+tree1.insert(5)
+// tree1.insert(3)
+// tree1.insert(9)
+// tree1.insert(8)
+// tree1.insert(10)
+// tree1.insert(13)
+// tree1.insert(12)
+// tree1.insert(14)
+// tree1.insert(20)
+// tree1.insert(18)
+// tree1.insert(25)
