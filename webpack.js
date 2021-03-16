@@ -38,3 +38,8 @@
 // Cookie V.S. Session
 // Cookie 存在浏览器的文件里，Session 存在服务器的文件里
 // Session 是基于 Cookie 实现的，具体做法就是把 SessionID 存在 Cookie 里
+
+
+plugin loader webpackdev - server
+
+// hot 不刷新 浏览器也不刷新配置 hotOnly: true
