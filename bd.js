@@ -53,10 +53,8 @@
 //     }
 // }
 
-
-
 // 题目：使用正则实现中横线转驼峰 如：border-top-width -> borderTopWidth
-// 出题人：原力 
+// 出题人：原力
 // 难度：一般
 // 考察点
 //     - 正则的基本用法：语法、特殊字符、转义、分组、标识符
@@ -72,6 +70,13 @@
 // };
 
 // console.log(toCamelCase('border-top-width'));
+
+const toCamelCase = (str = '') => {
+    let re = /-(\w)/g
+    return str.replace(re, ($1, $2) => {
+        return $2.toUpperCase()
+    })
+}
 
 // 正则扩展备选
 
@@ -93,7 +98,7 @@
 // })();
 
 // 题目：场景题如图所示，如何实现用户上传一张图片，在图片上拼接一个「武汉加油」的icon。
-// 出题人：蒋子晨 
+// 出题人：蒋子晨
 // 难度：中
 // 考察点
 //     - canvas的基本用法、formdata、跨域等
@@ -105,11 +110,8 @@
 // ctx.drawImage(底图，0（x轴位置), 图片高度与icon的差(y轴位置)) // 绘制icon
 // canvas.toBlob // 将html元素转为blob文件
 
-
-
-
 // 题目：前端安全相关csrf，什么是csrf、如果构造一个csrf攻击、如何防止csrf攻击
-// 出题人：原力 
+// 出题人：原力
 // 难度：中
 // 考察点
 // - 对csrf的理解

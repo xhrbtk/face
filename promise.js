@@ -21,7 +21,7 @@ function Promise(exe) {
         reject(error)
     }
 }
-Promise.prototype.then = function (onFufiled, onRejected) {
+Promise.prototype.then = function(onFufiled, onRejected) {
     let self = this
     if (self.status === 'resolved') {
         onFufiled(self.value)
@@ -31,28 +31,42 @@ Promise.prototype.then = function (onFufiled, onRejected) {
     }
 }
 
+let promise = new Promise(function(resolve, reject) {
+    console.log('xxx')
+    resolve(100)
+})
+
+promise.then(
+    function(data) {
+        console.log('data:', data)
+    },
+    function(err) {
+        console.log('err:', err)
+    }
+)
 
 function all(list) {
     return new Promise((resolve, reject) => {
-        let resValues = [];
-        let counts = 0;
+        let resValues = []
+        let counts = 0
         for (let [i, p] of list) {
-            resolve(p).then(res => {
-                counts++;
-                resValues[i] = res;
-                if (counts === list.length) {
-                    resolve(resValues)
+            resolve(p).then(
+                res => {
+                    counts++
+                    resValues[i] = res
+                    if (counts === list.length) {
+                        resolve(resValues)
+                    }
+                },
+                err => {
+                    reject(err)
                 }
-            }, err => {
-                reject(err)
-            })
+            )
         }
     })
 }
 
-
 // promise.all promise.race promise.finaly
-
 
 // 结构：
 // display:none: 会让元素完全从渲染树中消失，渲染的时候不占据任何空间, 不能点击，
@@ -70,7 +84,6 @@ function all(list) {
 
 // 联系：它们都能让元素不可见
 
-
 // 箭头函数是普通函数的简写，可以更优雅的定义一个函数，和普通函数相比，有以下几点差异：
 
 // 1、函数体内的 this 对象，就是定义时所在的对象，而不是使用时所在的对象。
@@ -83,4 +96,7 @@ function all(list) {
 
 // 没有自己的 this，无法调用 call，apply。
 // 没有 prototype 属性 ，而 new 命令在执行时需要将构造函数的 prototype 赋值给新的对象的 __proto__
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61b5e4fd7d91f91e3dec4e1370ddc1dc15f87e89

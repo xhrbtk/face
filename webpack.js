@@ -29,6 +29,16 @@
 // 如果有则浏览器会处理相应 如果不包含浏览器直接驳回
 // access-control-allow-origin: *
 
+// 抽象语法树
+// 计算记科学中 ast 是源代码的抽象语法结构的树装表现形式 这里特指变成语言的源代码
+// js的语法是为了给开发者更好的变成而设计的 但是不适合程序的理解 所以需要转换为ast来适合程序分析 浏览器编译器一般会吧源码转化为ast来进行进一步的分析等其他操作
+//JavaScript Parser，把js源码转化为抽象语法树的解析器。
+
+// 浏览器会把js源码通过解析器转为抽象语法树，再进一步转化为字节码或直接生成机器码。
+// 一般来说每个js引擎都会有自己的抽象语法树格式，Chrome的v8引擎，firefox的SpiderMonkey引擎等等，MDN提供了详细SpiderMonkey AST format的详细说明，算是业界的标准。
+// 通过 esprima 把源码转化为AST
+// 通过 estraverse 遍历并更新AST
+// 通过 escodegen 将AST重新生成源码
 
 // Cookie V.S. LocalStorage
 // 主要区别是 Cookie 会被发送到服务器，而 LocalStorage 不会
@@ -38,8 +48,3 @@
 // Cookie V.S. Session
 // Cookie 存在浏览器的文件里，Session 存在服务器的文件里
 // Session 是基于 Cookie 实现的，具体做法就是把 SessionID 存在 Cookie 里
-
-
-plugin loader webpackdev - server
-
-// hot 不刷新 浏览器也不刷新配置 hotOnly: true

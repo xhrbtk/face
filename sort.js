@@ -47,7 +47,7 @@ function multi(a, b, c, d) {
 }
 function curry(fn) {
     let arr = []
-    let ceshi = function () {
+    let ceshi = function() {
         if (arguments.length === fn.length) {
             return fn.apply(null, arguments)
         } else {
@@ -101,7 +101,7 @@ function quickSort(arr) {
 
 // 发布订阅模式
 
-var EventCenter = (function () {
+var EventCenter = (function() {
     var events = {}
     function on(evt, handler) {
         events[evt] = events[evt] || []
@@ -139,8 +139,16 @@ function objectfactory() {
     return typeof ret === 'object' ? ret : obj
 }
 
+function objectfactory() {
+    let obj = {}
+    Constructor = [].shift.call(arguments)
+    obj.__proto__ = Constructor.prototype
+    let ret = Constructor.apply(obj, arguments)
+    return typeof ret === 'object' ? ret : obj
+}
+
 // call
-Function.prototype.call2 = function (context) {
+Function.prototype.call2 = function(context) {
     let context = context || window
     context.fn = this
     let args = []
@@ -153,7 +161,7 @@ Function.prototype.call2 = function (context) {
     return result
 }
 
-Function.prototype.apply2 = function (context, arr) {
+Function.prototype.apply2 = function(context, arr) {
     var context = Object(context) || window
     context.fn = this
 
@@ -181,7 +189,3 @@ function newInstance(left, right) {
         leftVal = leftVal.__proto__
     }
 }
-
-
-
-
