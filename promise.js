@@ -21,7 +21,7 @@ function Promise(exe) {
         reject(error)
     }
 }
-Promise.prototype.then = function(onFufiled, onRejected) {
+Promise.prototype.then = function (onFufiled, onRejected) {
     let self = this
     if (self.status === 'resolved') {
         onFufiled(self.value)
@@ -31,16 +31,16 @@ Promise.prototype.then = function(onFufiled, onRejected) {
     }
 }
 
-let promise = new Promise(function(resolve, reject) {
+let promise = new Promise(function (resolve, reject) {
     console.log('xxx')
     resolve(100)
 })
 
 promise.then(
-    function(data) {
+    function (data) {
         console.log('data:', data)
     },
-    function(err) {
+    function (err) {
         console.log('err:', err)
     }
 )
@@ -96,7 +96,3 @@ function all(list) {
 
 // 没有自己的 this，无法调用 call，apply。
 // 没有 prototype 属性 ，而 new 命令在执行时需要将构造函数的 prototype 赋值给新的对象的 __proto__
-<<<<<<< HEAD
-
-=======
->>>>>>> 61b5e4fd7d91f91e3dec4e1370ddc1dc15f87e89
