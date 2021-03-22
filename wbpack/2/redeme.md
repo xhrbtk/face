@@ -20,3 +20,9 @@
 ## 本质 esmodule语法变成了commonjs规则
 
 ## 把关键字转译为
+
+## es6模块 和 commonjs 的区别
+- es模块是es标准里的模块定义语法 commonjs 是nodejs社区的民间约定
+- es模块使用import 和 export 关键字 commonjs 则是使用require和exports 对象
+- es模块采用了动态只读引用 而commonjs 则是简单的浅复制 
+- es是编译时加载 commonjs 是运行时加载
