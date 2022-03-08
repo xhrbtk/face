@@ -70,36 +70,15 @@
     {id: 4, name: '部门4', pid: 3},
     {id: 5, name: '部门5', pid: 4},
 ]
-function arrToTree(items){
+function arrToTree(arr){
     let result = []
-    let itemMap = {}
-    for(let item of items){
-        let id = item.id
-        let pid = item.pid
-        if(!itemMap[id]){
-            itemMap[id] = {
-                children: []
-            }
-        }
-        itemMap[id] = {
-            ...item,
-            children: itemMap[id]['children']
-        }
-        console.log(itemMap)
-        return
-        let treeItem = itemMap[id]
-        if(pid === 0){
-            result.push(treeItem)
-        }else{
-            if(!itemMap[pid]){
-                itemMap[pid] = {
-                    children: []
-                }
-            }
-            itemMap[pid].children.push(treeItem)
-        }
+    let map = new Map()
+    for(let item of arr){
+      map.set(item.id, { ...item, children: []})
     }
-    console.log(result)
+    for(let item of map){
+      console.log(item, map)
+    }
 }
 arrToTree(arr)
 </script>
