@@ -570,3 +570,16 @@ function findCommonParent(n1, n2){
 // localstorage 不同于cookie 会自动过期 过期时间需要自己维护 在setItem时 将过期时间种下
 // getItem 时将种下的时间当前时间进行对比 如果大于当前时间 将值返回即可 否则通过 removeItem将值移除 并返回null
 // 设计一个可以设置有效期的localStrorage Api
+
+
+// 使用reduce 实现map 函数功能
+// 输入[1,2,3]
+// 输出[2,4,6]
+Array.prototype.map2 = function(cb, ctx = null){
+    if(typeof cb !== 'function'){
+        throw('cb must be a function')
+    }
+    return this.reduce((result, cur, index, array) => {
+        return  result.concat(callback.call(ctx, cur, index, array))
+    }, [])
+}
