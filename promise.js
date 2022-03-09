@@ -48,13 +48,15 @@ promise.then(
 function all(list) {
     return new Promise((resolve, reject) => {
         let resValues = []
-        let counts = 0
+        let count = 0
+        let len = list.length
+        if(len == 0) return resolve(resValues)
         for (let [i, p] of list) {
             resolve(p).then(
                 res => {
-                    counts++
+                    count++
                     resValues[i] = res
-                    if (counts === list.length) {
+                    if (count === len) {
                         resolve(resValues)
                     }
                 },
@@ -63,6 +65,22 @@ function all(list) {
                 }
             )
         }
+    })
+}
+
+promise.all = (list) => {
+    return new Promise((resolve, reject) => {
+        let count = 0
+        let result = []
+        let len = list.length
+        if(len == 0) return res([])
+        Promise.forEach((item, i) => {
+            Promise.resolve(item).then(res => {
+                count++
+                result[i] = res
+                if(count == len) resolve(result)
+            })
+        }).catch(reject)
     })
 }
 

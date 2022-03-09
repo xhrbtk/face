@@ -546,3 +546,27 @@ diPromiseAll([p1, p2, p3]).then(
         console.log(err, 'err')
     }
 )
+
+
+// 查找两个dom节点的最近公共父节点
+function findCommonParent(n1, n2){
+    if(n1.contains(n2)){
+        return n1
+    }else if(n2.contains(n1)){
+        return n2
+    }else {
+        return findCommonParent(n1.parentNode, n2)
+    }
+}
+
+function findCommonParent(n1, n2){
+    while(!n1.contains(n2)){
+        n1 = n1.parentNode
+    }
+    return n1
+}
+
+// cookie 和 localstorage  
+// localstorage 不同于cookie 会自动过期 过期时间需要自己维护 在setItem时 将过期时间种下
+// getItem 时将种下的时间当前时间进行对比 如果大于当前时间 将值返回即可 否则通过 removeItem将值移除 并返回null
+// 设计一个可以设置有效期的localStrorage Api
