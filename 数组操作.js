@@ -93,3 +93,6 @@ console.log(arr)
 // 关于输入框非空的判断 空值合并运算符 ？？
 // 扁平化数组
 // 
+
+// 为什么有bigint  因为js 的number 默认是双精度浮点数
+// 为什么有symbol
