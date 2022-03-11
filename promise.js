@@ -1,3 +1,18 @@
+
+class Promise2 {
+    let status 
+}
+
+
+
+
+
+
+
+
+
+
+
 function Promise(exe) {
     let self = this
     self.status = 'pending'
@@ -68,19 +83,37 @@ function all(list) {
     })
 }
 
+// promise.all = (list) => {
+//     return new Promise((resolve, reject) => {
+//         let count = 0
+//         let result = []
+//         let len = list.length
+//         if(len == 0) return res([])
+//         Promise.forEach((item, i) => {
+//             Promise.resolve(item).then(res => {
+//                 count++
+//                 result[i] = res
+//                 if(count == len) resolve(result)
+//             })
+//         }).catch(reject)
+//     })
+// }
 promise.all = (list) => {
+    let len = list.length
+    let count = 0
+    let result = []
     return new Promise((resolve, reject) => {
-        let count = 0
-        let result = []
-        let len = list.length
-        if(len == 0) return res([])
-        Promise.forEach((item, i) => {
-            Promise.resolve(item).then(res => {
+        list.map((item, index) => {
+            item.then(res => {
+                result[index] = res
                 count++
-                result[i] = res
-                if(count == len) resolve(result)
+                if(count == len){
+                    resolve(result)
+                }
+            }, err => {
+                reject(err)
             })
-        }).catch(reject)
+        })
     })
 }
 
