@@ -84,12 +84,13 @@ function selectSort(arr) {
 
 // 快排
 function quickSort(arr) {
+    if(arr.length <= 1) return arr
     let len = arr.length
     let pivotIndex = Math.floor(len / 2)
     let pivot = arr.splice(pivotIndex, 1)[0]
     let left = []
     let right = []
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < arr.length; i++) {
         if (arr[i] > pivot) {
             right.push(arr[i])
         } else {
@@ -191,7 +192,7 @@ function newInstance(left, right) {
 }
 
 
-// 防抖
+// 防抖 触发事件n秒后才执行函数 如果 n秒内又触发了事件 会重新计算函数执行时间
 function debounce(fn, delay) {
     let timerId = null
     return function() {
@@ -203,7 +204,8 @@ function debounce(fn, delay) {
     }
 }
 
-// 节流
+
+// 节流 连续触发事件但是在ns 中只执行一次函数
 function throttle(fn, delay) {
     let canUse = true
     return function() {
@@ -582,4 +584,92 @@ Array.prototype.map2 = function(cb, ctx = null){
     return this.reduce((result, cur, index, array) => {
         return  result.concat(callback.call(ctx, cur, index, array))
     }, [])
+}
+
+// 防抖 触发事件ns后才执行函数
+function debounce(fn, delay){
+    let timerid = null
+    return function () {
+        if(timerid) clearTimeout(timerid)
+        let context = this
+        timerid = setTimeout(() => {
+            fn.apply(context, arguments)
+        }, delay)
+    }
+}
+
+// 节流 连续触发事件 ns只执行一次
+function throttle(fn, delay){
+    let canuse = true
+    return function(){
+        if(canuse){
+            fn.apply(this, arguments)
+            canuse = false
+            setTimeout(() => {
+                canuse = true
+            }, delay)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+var EventCenter = (
+    function(){
+        var events = {}
+        function on(evt, handler){
+            events[evt] = events[evt] || []
+            events[evt].push({
+                handler: handler
+            })
+        }
+        function fire(evt, args){
+            if(!events[evt]) return 
+            for(let i = 0; i < events[evt].length; i++){
+                events[evt][i].handler(args)
+            }
+        }
+        function off(name){
+            delete events[name]
+        }
+        return {
+            on,
+            fire,
+            off
+        }
+    }
+)()
+
+
+// 函数科利华
+function add(a, b, c){
+    return a+b+c
+}
+function multi(a, b, c, d){
+    return a*b*c*d
+}
+function curry(fn){
+    let arr = []
+    let ceshi = function(){
+        if(arguments.length == fn.length){
+            return fn.apply(null, arguments)
+        }else{
+            arr = arr.concat([...arguments])
+            if(arr.length == fn.length){
+                let result = fn.apply(null, arr)
+                arr = []
+                return result
+            }
+        }
+    }
+    return ceshi
 }

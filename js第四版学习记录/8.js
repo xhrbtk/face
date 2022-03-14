@@ -46,11 +46,11 @@
 // console.log(x.sayName()) 错误
 
 // 原型式继承 ---Object.create()
-// function object(o){
-//     function F(){}
-//     F.prototype = o
-//     return new F()
-// }
+function object(o){
+    function F(){}
+    F.prototype = o
+    return new F()
+}
 
 // let person = {
 //     name: 'xx'
@@ -89,3 +89,4 @@ function inheritPrototype(SubType, SuperType){
     SubType.prototype = prototype
 }
 inheritPrototype(SubType, SuperType)
+
