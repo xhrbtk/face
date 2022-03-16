@@ -1,17 +1,18 @@
+ 
 
 
-// 冒泡
-let arr = [1, 3, 4,6,2]
-function bubbleSort(arr){
-    for(let i = 0; i < arr.length; i++){
-        for(let j = 0; j < arr.length; j++){
-            if(arr[j] > arr[j+1]){
-                let temp = arr[j]
-                arr[j] = arr[j+1]
-                arr[j+1] = temp
+
+function delegate(element, eventType, selector, fn){
+    element.addEventListener(eventType, e=> {
+        let el = e.target
+        while(!e.matches(selector)){
+            if(el = element){
+                el = null
+                break
             }
+            el = el.parentNode
         }
-    }
-    return arr
+        el && fn.apply(el, e, el)
+    })
+    return element
 }
-console.log(bubbleSort(arr))

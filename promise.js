@@ -1,16 +1,4 @@
 
-class Promise2 {
-    let status 
-}
-
-
-
-
-
-
-
-
-
 
 
 function Promise(exe) {
@@ -117,8 +105,12 @@ promise.all = (list) => {
     })
 }
 
-// promise.all promise.race promise.finaly
-
+// promise.all promise.race promise.allSettled promise.any promise.finaly
+// promise.all 所有的都执行成功 才返回成功 有一个失败 就返回失败
+// promise.race 一个成功就是成功 一个失败就是失败
+// promise.allsettled 没有失败 返回执行的所有结果
+// promise.any 一个成功就是成功 所有失败才是失败
+// promise.finaly 不管前面成功或者失败 都会执行后面的
 // 结构：
 // display:none: 会让元素完全从渲染树中消失，渲染的时候不占据任何空间, 不能点击，
 // visibility: hidden:不会让元素从渲染树消失，渲染元素继续占据空间，只是内容不可见，不能点击
@@ -147,3 +139,115 @@ promise.all = (list) => {
 
 // 没有自己的 this，无法调用 call，apply。
 // 没有 prototype 属性 ，而 new 命令在执行时需要将构造函数的 prototype 赋值给新的对象的 __proto__
+
+
+
+
+
+
+// 
+function diPromiseAll(promises) {
+    return new Promise((resolve, reject) => {
+        let result = []
+        let count = 0
+        promises.map((promise, index) => {
+            promise.then(res => {
+                result[index] = res
+                count ++
+                if(count == promises.length) resolve(result)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    })
+}
+let p1 = Promise.resolve(1),
+    p2 = Promise.resolve(2),
+    p3 = Promise.resolve(3),
+    p4 = Promise.reject('err4')
+    p5 = Promise.reject('err5')
+
+diPromiseAll([p1,p2,p4]).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.log('err', err)
+})
+
+Promise.race([p4, p2, p1]).then(res => {
+    console.log('res-race', res)
+}).catch(err => {
+    console.log('err-race', err)
+})
+
+function dirace(promises){
+    return new Promise((resolve, reject) => {
+        promises.map((promise, index) => {
+            promise.then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    })
+}
+
+dirace([p4]).then(res => {
+    console.log('dirace', res)
+}).catch(err => {
+    console.log('diraceerr', err)
+})
+
+Promise.allSettled([p1,p2,p4]).then(res => {
+    console.log('allsettled', res)
+}).catch(err => {
+    console.log('settlederr', err)
+})
+
+function allSettled(promises){
+    return new Promise((resolve) => {
+        let result = []
+        let count = 0
+        promises.map((promise, index) => {
+            promise.then(res => {
+                count++
+                result[index] = { status: 'fulfilled', value: res}
+                if(count == promises.length) resolve(result)
+            }).catch(err => {
+                count++
+                result[index] = { status: 'rejected', reason: err }
+                if(count == promises.length) resolve(result)
+            })
+        })
+    })
+}
+
+allSettled([p1,p2, p4]).then(res => {
+    console.log('---settle', res)
+})
+
+Promise.any([p1, p5]).then(res => {
+    console.log('any', res)
+}).catch(err => {
+    console.log('err-any', err)
+})
+
+function any(promises){
+    // 只要有一个resolve 那么久resolve 所有的reject 才变成reject
+    return new Promise((resolve, reject) => {
+        let count = 0
+        promises.map((promise, index) => {
+            promise.then(res => {
+                resolve(res)
+            }).catch(err => {
+                count++
+                if(count == promises.length) reject('所有的请求都是失败的')
+            })
+        })
+    })
+}
+
+any([p5]).then(res => {
+    console.log('any---', res)
+}).catch(err => {
+    console.log('err-any--', err)
+})
