@@ -273,7 +273,7 @@ class Dog extends Animal {
     }
 }
 
-// 事件委托
+// 事件委托  这个方法 主要是为了解决 li 里面span元素的代理 详情看 事件代理.html
 function delegate(element, eventType, selector, fn) {
     // element ul selector li
     element.addEventListener(eventType, e => {
@@ -294,7 +294,7 @@ function delegate(element, eventType, selector, fn) {
 function shallowClone(source) {
     let target = {}
     for (let i in source) {
-        // hasOwnProperty 方法会返回一个布尔值 指示对象自身属性中师范具有指定的属性
+        // 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）
         if (source.hasOwnProperty(i)) {
             target[i] = source[i]
         }
@@ -302,28 +302,47 @@ function shallowClone(source) {
 }
 
 // 深拷贝
-function deepClone(obj) {
-    let newobj = {}
-    for (let key in obj) {
-        // 判断obj是否有key这个自有属性
-        if (obj.hasOwnProperty(key)) {
-            // 基本类型
-            if (
-                typeof obj[key] === 'string' ||
-                typeof obj[key] === 'number' ||
-                typeof obj[key] === 'null' ||
-                typeof obj[key] === 'undefined' ||
-                typeof obj[key] === 'boolean' ||
-                typeof obj[key] === 'symbol'
-            ) {
-                newobj[key] = obj[key]
-            } else {
-                // 多层潜逃的引用类型
-                newobj[key] = deepClone(obj[key])
+let a = { 
+    name: 'xhr',
+    arr: [1,2,3],
+    b: function(){console.log('x')},
+    c: new Date(),
+    e: (b) => b,
+    regex: /\.(j|t)/
+}
+let cache = new Map()
+function deepClone(a) {
+    if(a instanceof Object){
+        if(cache.get(a)) return cache.get(a)
+        let result
+        if(a instanceof Function){
+            if(a.prototype){
+                // 有prototype的就是普通函数
+                result = function(){ return a.apply(this, arguments) }
+            }else{
+                result = (...args) =>  a.call(undefined, ...args)
+            }
+        }else if(a instanceof Array){
+            result = []
+        }else if(a instanceof Date){
+            result = new Date(a-0)
+        }else if(a instanceof RegExp){
+            result = new RegExp(a.source, a.flags)
+        }else{
+            result = {}
+        }
+        cache.set(a, result)
+        for(let key in a){
+            // 只有a 的自由属性才拷贝 继承属性不拷贝
+            if(a.hasOwnProperty(key)){
+                result[key] = deepClone(a[key])
             }
         }
+        return result
+    }else{
+        return a
     }
-    return newobj
+    
 }
 
 // ts 提供了类型约束 因此更可控 更容易重构 更适合大型项目 更容易维护
