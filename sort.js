@@ -128,6 +128,13 @@ var EventCenter = (function() {
     }
 })()
 
+
+function user1 (content) {
+    console.log('用户1订阅了:', content);
+}
+eventCenter.on('article1', user1)
+eventCenter.fire('article1', '今天是个好日子。。。')
+
 // new 的实现
 function objectfactory() {
     let obj = {}
