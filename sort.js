@@ -1,3 +1,44 @@
+// 归并排序
+
+// 归并排序 复杂度 O(nlogn)   分治法 将原始数组切分成较小的数组 直到每个小数组只有一个位置 接着将小数组归并成较大的数组 直到最后只有一个排序完毕的大数组
+let arr = [2, 1, 3, 7, 56, 89, 43, 21]
+function mergeSort(arr) {
+    let len = arr.length
+    if (len == 1) return arr
+    let mid = len >>> 1
+    let left = arr.slice(0, mid)
+    let right = arr.slice(mid)
+    return merge(mergeSort(left), mergeSort(right))
+}
+function merge(arr1, arr2) {
+    let result = []
+    let il = 0
+    let ir = 0
+    while (il < arr1.length && ir < arr2.length) {
+        if (arr1[il] < arr2[ir]) {
+            result.push(arr1[il])
+            il++
+        } else {
+            result.push(arr2[ir])
+            ir++
+        }
+    }
+    while (il < arr1.length) {
+        result.push(arr1[il])
+        il++
+    }
+    while (ir < arr2.length) {
+        result.push(arr2[ir])
+        ir++
+    }
+    return result
+}
+
+
+console.log(mergeSort(arr))
+
+
+
 // 冒泡
 let arr = [1, 2, 3, 5, 1, 2, 3]
 
@@ -47,7 +88,7 @@ function multi(a, b, c, d) {
 }
 function curry(fn) {
     let arr = []
-    let ceshi = function() {
+    let ceshi = function () {
         if (arguments.length === fn.length) {
             return fn.apply(null, arguments)
         } else {
@@ -84,7 +125,7 @@ function selectSort(arr) {
 
 // 快排
 function quickSort(arr) {
-    if(arr.length <= 1) return arr
+    if (arr.length <= 1) return arr
     let len = arr.length
     let pivotIndex = Math.floor(len / 2)
     let pivot = arr.splice(pivotIndex, 1)[0]
@@ -102,7 +143,7 @@ function quickSort(arr) {
 
 // 发布订阅模式
 
-var EventCenter = (function() {
+var EventCenter = (function () {
     var events = {}
     function on(evt, handler) {
         events[evt] = events[evt] || []
@@ -129,7 +170,7 @@ var EventCenter = (function() {
 })()
 
 
-function user1 (content) {
+function user1(content) {
     console.log('用户1订阅了:', content);
 }
 eventCenter.on('article1', user1)
@@ -156,7 +197,7 @@ function objectfactory() {
 }
 
 // call
-Function.prototype.call2 = function(context) {
+Function.prototype.call2 = function (context) {
     let context = context || window
     context.fn = this
     let args = []
@@ -169,7 +210,7 @@ Function.prototype.call2 = function(context) {
     return result
 }
 
-Function.prototype.apply2 = function(context, arr) {
+Function.prototype.apply2 = function (context, arr) {
     var context = Object(context) || window
     context.fn = this
 
@@ -202,7 +243,7 @@ function newInstance(left, right) {
 // 防抖 触发事件n秒后才执行函数 如果 n秒内又触发了事件 会重新计算函数执行时间
 function debounce(fn, delay) {
     let timerId = null
-    return function() {
+    return function () {
         if (timerId) clearTimeout(timerId)
         let context = this
         timerId = setTimeout(() => {
@@ -215,7 +256,7 @@ function debounce(fn, delay) {
 // 节流 连续触发事件但是在ns 中只执行一次函数
 function throttle(fn, delay) {
     let canUse = true
-    return function() {
+    return function () {
         if (canUse) {
             fn.apply(this, arguments)
             canUse = false
@@ -230,7 +271,7 @@ function throttle(fn, delay) {
 let xhr = new XMLHttpRequest()
 xhr.open('GET', url, true)
 // true 表示异步请求 false 表示同步请求
-xhr.onreadystatechange = function() {
+xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
         // readyState 0 未初始化 尚未调用open方法
         // 1 启动 一句调用open方法 但是未调用 send方法
@@ -253,7 +294,7 @@ function trim(string) {
 function Animal(color) {
     this.color = color
 }
-Animal.prototype.move = function() {}
+Animal.prototype.move = function () { }
 
 function Dog(color, name) {
     Animal.call(this, color)
@@ -261,7 +302,7 @@ function Dog(color, name) {
 }
 
 // Dog.prototype.__proto__ = Animal.prototype
-function temp() {}
+function temp() { }
 temp.prototype = Animal.prototype
 Dog.prototype = new temp()
 
@@ -270,7 +311,7 @@ class Animal {
     constructor(color) {
         this.color = color
     }
-    move() {}
+    move() { }
 }
 
 class Dog extends Animal {
@@ -309,47 +350,47 @@ function shallowClone(source) {
 }
 
 // 深拷贝
-let a = { 
+let a = {
     name: 'xhr',
-    arr: [1,2,3],
-    b: function(){console.log('x')},
+    arr: [1, 2, 3],
+    b: function () { console.log('x') },
     c: new Date(),
     e: (b) => b,
     regex: /\.(j|t)/
 }
 let cache = new Map()
 function deepClone(a) {
-    if(a instanceof Object){
-        if(cache.get(a)) return cache.get(a)
+    if (a instanceof Object) {
+        if (cache.get(a)) return cache.get(a)
         let result
-        if(a instanceof Function){
-            if(a.prototype){
+        if (a instanceof Function) {
+            if (a.prototype) {
                 // 有prototype的就是普通函数
-                result = function(){ return a.apply(this, arguments) }
-            }else{
-                result = (...args) =>  a.call(undefined, ...args)
+                result = function () { return a.apply(this, arguments) }
+            } else {
+                result = (...args) => a.call(undefined, ...args)
             }
-        }else if(a instanceof Array){
+        } else if (a instanceof Array) {
             result = []
-        }else if(a instanceof Date){
-            result = new Date(a-0)
-        }else if(a instanceof RegExp){
+        } else if (a instanceof Date) {
+            result = new Date(a - 0)
+        } else if (a instanceof RegExp) {
             result = new RegExp(a.source, a.flags)
-        }else{
+        } else {
             result = {}
         }
         cache.set(a, result)
-        for(let key in a){
+        for (let key in a) {
             // 只有a 的自由属性才拷贝 继承属性不拷贝
-            if(a.hasOwnProperty(key)){
+            if (a.hasOwnProperty(key)) {
                 result[key] = deepClone(a[key])
             }
         }
         return result
-    }else{
+    } else {
         return a
     }
-    
+
 }
 
 
@@ -405,18 +446,18 @@ diPromiseAll([p1, p2, p3]).then(
 
 
 // 查找两个dom节点的最近公共父节点
-function findCommonParent(n1, n2){
-    if(n1.contains(n2)){
+function findCommonParent(n1, n2) {
+    if (n1.contains(n2)) {
         return n1
-    }else if(n2.contains(n1)){
+    } else if (n2.contains(n1)) {
         return n2
-    }else {
+    } else {
         return findCommonParent(n1.parentNode, n2)
     }
 }
 
-function findCommonParent(n1, n2){
-    while(!n1.contains(n2)){
+function findCommonParent(n1, n2) {
+    while (!n1.contains(n2)) {
         n1 = n1.parentNode
     }
     return n1
@@ -431,20 +472,20 @@ function findCommonParent(n1, n2){
 // 使用reduce 实现map 函数功能
 // 输入[1,2,3]
 // 输出[2,4,6]
-Array.prototype.map2 = function(cb, ctx = null){
-    if(typeof cb !== 'function'){
-        throw('cb must be a function')
+Array.prototype.map2 = function (cb, ctx = null) {
+    if (typeof cb !== 'function') {
+        throw ('cb must be a function')
     }
     return this.reduce((result, cur, index, array) => {
-        return  result.concat(callback.call(ctx, cur, index, array))
+        return result.concat(callback.call(ctx, cur, index, array))
     }, [])
 }
 
 // 防抖 触发事件ns后才执行函数
-function debounce(fn, delay){
+function debounce(fn, delay) {
     let timerid = null
     return function () {
-        if(timerid) clearTimeout(timerid)
+        if (timerid) clearTimeout(timerid)
         let context = this
         timerid = setTimeout(() => {
             fn.apply(context, arguments)
@@ -453,10 +494,10 @@ function debounce(fn, delay){
 }
 
 // 节流 连续触发事件 ns只执行一次
-function throttle(fn, delay){
+function throttle(fn, delay) {
     let canuse = true
-    return function(){
-        if(canuse){
+    return function () {
+        if (canuse) {
             fn.apply(this, arguments)
             canuse = false
             setTimeout(() => {
@@ -478,21 +519,21 @@ function throttle(fn, delay){
 
 
 var EventCenter = (
-    function(){
+    function () {
         var events = {}
-        function on(evt, handler){
+        function on(evt, handler) {
             events[evt] = events[evt] || []
             events[evt].push({
                 handler: handler
             })
         }
-        function fire(evt, args){
-            if(!events[evt]) return 
-            for(let i = 0; i < events[evt].length; i++){
+        function fire(evt, args) {
+            if (!events[evt]) return
+            for (let i = 0; i < events[evt].length; i++) {
                 events[evt][i].handler(args)
             }
         }
-        function off(name){
+        function off(name) {
             delete events[name]
         }
         return {
@@ -505,20 +546,20 @@ var EventCenter = (
 
 
 // 函数科利华
-function add(a, b, c){
-    return a+b+c
+function add(a, b, c) {
+    return a + b + c
 }
-function multi(a, b, c, d){
-    return a*b*c*d
+function multi(a, b, c, d) {
+    return a * b * c * d
 }
-function curry(fn){
+function curry(fn) {
     let arr = []
-    let ceshi = function(){
-        if(arguments.length == fn.length){
+    let ceshi = function () {
+        if (arguments.length == fn.length) {
             return fn.apply(null, arguments)
-        }else{
+        } else {
             arr = arr.concat([...arguments])
-            if(arr.length == fn.length){
+            if (arr.length == fn.length) {
                 let result = fn.apply(null, arr)
                 arr = []
                 return result
@@ -555,12 +596,12 @@ function curry(fn){
 // 如果查找失败 则会返回false 告诉我们左边变量并非是右边变量的实例
 // 箭头函数没有原型
 
-function instance(left, right){
+function instance(left, right) {
     let leftval = left.__proto__
     let rightval = right.prototype
-    while(true){
-        if(leftval == null) return false
-        if(leftval == rightval) return true
+    while (true) {
+        if (leftval == null) return false
+        if (leftval == rightval) return true
         leftval = leftval.__proto__
     }
 }
@@ -609,7 +650,7 @@ function instance(left, right){
 
 
 
-var _new = function() {
+var _new = function () {
     let Constructor = [].shift.call(arguments)  //删除并拿到类数组第一项
     let args = arguments
     const obj = new Object()
@@ -626,11 +667,11 @@ function _new(fn, ...args) {
 }
 
 const newObj = new Proxy(obj, {
-    get: function(target, key, receiver) {
+    get: function (target, key, receiver) {
         console.log(`getting ${key}!`)
         return Reflect.get(target, key, receiver)
     },
-    set: function(target, key, value, receiver) {
+    set: function (target, key, value, receiver) {
         console.log(target, key, value, receiver)
         if (key === 'text') {
             input.value = value
