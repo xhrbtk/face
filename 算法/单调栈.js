@@ -1,6 +1,6 @@
 
 // 单调栈模版
-// 找更大的数 倒着循环遍历
+// 找更大的数 倒着循环遍历  环形数组 -- >>> 将原始数组翻倍
 function nexGreaterElement(arr) {
     let len = arr.length
     let stack = []
