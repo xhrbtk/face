@@ -34,3 +34,54 @@
 - id 冲突了 就不能用id了 never
 - 如果A B 无交集 可能得到never 也可能只是属性为never
 
+
+### 类型兼容与赋值 7.ts
+- 属性多的可以代替属性少的
+- 属性少的代替不了属性多的
+- 函数之间的兼容 参数个数不同 能兼容吗？
+
+
+### bottom 类型 可以 赋值 给top 类型
+
+
+
+### 描述对象 
+- type 或 interface
+- 索引签名 和 映射类型
+- 问号表示可选
+- readonly 表示只读
+
+### type 和 interface 的区别
+- 不同点 type 可以定义基本类型的别名 如type myString = string
+- 不同点 type 可以通过typeof操作符来定义 如 type myType = typeof someObj
+- 不同点 type 可以申明联合类型 如 type unionType = myType | myType2
+- 不同点 type 可以申明元组类型 如 type yuanzu = [myType1, mytype2]
+
+- interface 可以申明合并
+```
+interface test {
+    name: string
+}
+interface test {
+    age: string
+}
+<!-- test 实际为{ name: string age: string } -->
+```
+
+### 函数的声明方式
+- 构造函数
+- 类型谓词
+
+
+### 与参数
+- 函数重载
+- 剩余参数
+- 展开参数 与 as const
+- 参数对象析构
+
+
+### 泛型 确实有点难以理解
+- 高级
+- 体操 - 智商挑战
+- 泛型约束
+
