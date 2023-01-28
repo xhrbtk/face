@@ -104,7 +104,7 @@ function curry(fn) {
     return ceshi
 }
 
-// 选择排序
+// 选择排序 升序
 function selectSort(arr) {
     let len = arr.length
     let minIndex = 0
@@ -112,7 +112,7 @@ function selectSort(arr) {
     for (let i = 0; i < len; i++) {
         minIndex = i
         for (let j = i + 1; j < len; j++) {
-            if (arr[minIndex] < arr[j]) {
+            if (arr[minIndex] > arr[j]) {
                 minIndex = j
             }
         }
