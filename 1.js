@@ -41,7 +41,7 @@
 
 // console.log(mergeSort(arr))
 
-let arr = [3, 2, 2, 3]
+let arr = [3]
 // 暴力解法
 // function removeElement(arr) {
 //     let len = arr.length
@@ -63,16 +63,51 @@ let arr = [3, 2, 2, 3]
 
 // 双指针
 
-function removeElement(arr) {
-    let len = arr.length
-    let slowIndex = 0
-    for (let fastIndex = 0; fastIndex < len; fastIndex++) {
-        if (arr[fastIndex] != 3) {
-            arr[slowIndex++] = arr[fastIndex]
-            console.log(slowIndex)
+// function removeElement(arr) {
+//     let len = arr.length
+//     let slowIndex = 0
+//     for (let fastIndex = 0; fastIndex < len; fastIndex++) {
+//         if (arr[fastIndex] != 3) {
+//             arr[slowIndex++] = arr[fastIndex]
+//             console.log(slowIndex)
+//         }
+//     }
+//     return { arr }
+// }
+
+// console.log(removeElement(arr))
+
+// 寻找左侧边界的二分搜索
+function findLeft(arr, target) {
+    let left = 0
+    let right = arr.length - 1
+    while (left <= right) {
+        let mid = (left + right) >>> 1
+        if (arr[mid] >= target) {
+            right = mid - 1
+        } else {
+            left = mid + 1
         }
     }
-    return { arr }
+    return left
 }
 
-console.log(removeElement(arr))
+console.log(arr)
+console.log('left', findLeft(arr, 3))
+
+// 寻找右侧边界的二分搜索
+function findRight(arr, target) {
+    let left = 0
+    let right = arr.length - 1
+    while (left <= right) {
+        let mid = (left + right) >>> 1
+        if (arr[mid] > target) {
+            right = mid - 1
+        } else {
+            left = mid + 1
+        }
+    }
+    return left - 1
+}
+
+console.log('right', findRight(arr, 3))
