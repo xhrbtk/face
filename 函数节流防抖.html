@@ -1,0 +1,38 @@
+<div id="content"
+    style="height:150px;line-height:150px;text-align:center; color: #fff;background-color:#ccc;font-size:80px;"></div>
+  <script>
+    let num = 1;
+    const content = document.getElementById('content');
+    function count() {
+      content.innerHTML = num++;
+    };
+    // 防抖如果连续触发函数只执行一次
+    function debounce(fn, delay){
+        let timer = null
+        return function(){
+            if(timer){
+                clearTimeout(timer)
+            }
+            timer = setTimeout(() => {
+                fn.apply(this, arguments)
+            }, delay)
+        }
+    }
+    // 节流 连续触发函数 ns内只执行一次
+    function throttle(fn, delay){
+        let timer = null
+        return function(){
+            if(timer){
+                return 
+            }else {
+                fn.apply(this, arguments)
+                timer = setTimeout(() => {
+                    timer = null
+                }, delay)
+            }
+        }
+    }
+    // content.onmousemove = throttle(count, 1000)
+    content.onmousemove = debounce(count,1000);
+  </script>
+

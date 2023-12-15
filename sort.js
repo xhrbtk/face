@@ -92,6 +92,7 @@ function curry(fn) {
         if (arguments.length === fn.length) {
             return fn.apply(null, arguments)
         } else {
+            // [].slice.call(arguments) 将arguments转换为数组 因为arguments是类数组不是数组
             arr = arr.concat([].slice.call(arguments))
             if (arr.length == fn.length) {
                 let result = fn.apply(null, arr)
@@ -176,6 +177,11 @@ function user1(content) {
 eventCenter.on('article1', user1)
 eventCenter.fire('article1', '今天是个好日子。。。')
 
+// js中使用new关键字的时候  会经历以下几个步骤
+1. 创建一个空对象
+2. 设置原型链：新创建的对象的__proto__会被设置为构造函数的prototype对象
+3. 执行构造函数: 构造函数中的代码会被执行 其中this关键字将引用新创建的对象
+4. 返回新对象：除非构造函数显式的返回一个对象 否则创建的对象将被返回
 // new 的实现
 function objectfactory() {
     let obj = {}
@@ -184,17 +190,17 @@ function objectfactory() {
     obj.__proto__ = Constructor.prototype
     // 利用apply更改this的指向 指向新的对象
     let ret = Constructor.apply(obj, arguments)
+    // 如果构造函数返回的是数据 就实例化一个对象 如果是一个对象就返回该对象
     // 判断ret是否是object 如果是对象 返回ret 否则直接返回obj
     return typeof ret === 'object' ? ret : obj
 }
-
-function objectfactory() {
-    let obj = {}
-    Constructor = [].shift.call(arguments)
-    obj.__proto__ = Constructor.prototype
-    let ret = Constructor.apply(obj, arguments)
-    return typeof ret === 'object' ? ret : obj
+function add(a, b) {
+    console.log(a + b)
 }
+let x1 = new add(1, 2)
+let x = newObject(add, 1, 2)
+
+
 
 // call
 Function.prototype.call2 = function (context) {
@@ -241,6 +247,7 @@ function newInstance(left, right) {
 
 
 // 防抖 触发事件n秒后才执行函数 如果 n秒内又触发了事件 会重新计算函数执行时间
+
 function debounce(fn, delay) {
     let timerId = null
     return function () {
@@ -252,20 +259,26 @@ function debounce(fn, delay) {
     }
 }
 
+console.log('sort------')
 
-// 节流 连续触发事件但是在ns 中只执行一次函数
+
+
+// 节流 连续触发事件但是ns中只执行一次函数
 function throttle(fn, delay) {
-    let canUse = true
+    let timer = null
     return function () {
-        if (canUse) {
+        if (timer) {
+            return
+        } else {
             fn.apply(this, arguments)
-            canUse = false
-            setTimeout(() => {
-                canUse = true
-            }, delay)
+            timer = setTimeout(() => {
+                timer = null
+            }, delay);
         }
     }
 }
+
+
 
 // 手写ajax
 let xhr = new XMLHttpRequest()
@@ -284,6 +297,9 @@ xhr.onreadystatechange = function () {
     }
 }
 xhr.send()
+
+
+
 
 // 用正则实现trim
 function trim(string) {
@@ -320,7 +336,7 @@ class Dog extends Animal {
         this.name = name
     }
 }
-
+// 1.节省监听器  2.实现动态监听
 // 事件委托  这个方法 主要是为了解决 li 里面span元素的代理 详情看 事件代理.html
 function delegate(element, eventType, selector, fn) {
     // element ul selector li
@@ -333,7 +349,7 @@ function delegate(element, eventType, selector, fn) {
             }
             el = el.parentNode
         }
-        el && fn.apply(el, e, el)
+        el && fn.call(el, e, el)
     })
     return element
 }
@@ -350,6 +366,8 @@ function shallowClone(source) {
 }
 
 // 深拷贝
+// instanceof 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上
+
 let a = {
     name: 'xhr',
     arr: [1, 2, 3],
@@ -368,11 +386,15 @@ function deepClone(a) {
                 // 有prototype的就是普通函数
                 result = function () { return a.apply(this, arguments) }
             } else {
+                // 箭头函数没有prototype
                 result = (...args) => a.call(undefined, ...args)
             }
         } else if (a instanceof Array) {
             result = []
         } else if (a instanceof Date) {
+            // 在JavaScript中，如果new Date()的参数是一个数字，那么这个数字会被解释为毫秒数，而不是日期对象。因此，如果你想将一个数字转换为日期对象，你需要将它转换为0毫秒。
+            // 举个例子，如果你有一个Unix时间戳（即从1970年1月1日00:00:00 UTC到现在的毫秒数），
+            // 你可以使用new Date(unixTimestamp - 0)来将它转换为日期对象。这样做的目的是为了确保new Date()能够正确地解析参数
             result = new Date(a - 0)
         } else if (a instanceof RegExp) {
             result = new RegExp(a.source, a.flags)
@@ -481,7 +503,9 @@ Array.prototype.map2 = function (cb, ctx = null) {
     }, [])
 }
 
-// 防抖 触发事件ns后才执行函数
+
+
+// 防抖 连续触发函数只执行一次
 function debounce(fn, delay) {
     let timerid = null
     return function () {
@@ -506,15 +530,6 @@ function throttle(fn, delay) {
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -650,14 +665,14 @@ function instance(left, right) {
 
 
 
-var _new = function () {
-    let Constructor = [].shift.call(arguments)  //删除并拿到类数组第一项
-    let args = arguments
-    const obj = new Object()
-    obj.__proto__ = Constructor.prototype
-    Constructor.call(obj, ...args)
-    return obj
-}
+// var _new = function () {
+//     let Constructor = [].shift.call(arguments)  //删除并拿到类数组第一项
+//     let args = arguments
+//     const obj = new Object()
+//     obj.__proto__ = Constructor.prototype
+//     Constructor.call(obj, ...args)
+//     return obj
+// }
 
 // Object.create()  方法创建新一个新的对象 使用现有的对象来提供创建对象的__proto__
 function _new(fn, ...args) {
@@ -782,3 +797,16 @@ const newObj = new Proxy(obj, {
 // vue原理
 // 写组件的收获
 // 版本管理
+
+
+
+
+
+
+
+
+// splice(start, deleteCount, item1, item2, itemN)
+
+// some方法 
+
+

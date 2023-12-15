@@ -12,7 +12,7 @@ function Promise(exe) {
             self.value = value
         }
     }
-    function reject(reson) {
+    function reject(reason) {
         if (self.status == 'pending') {
             self.status = 'rejected'
             self.reason = reason
@@ -48,12 +48,13 @@ promise.then(
     }
 )
 
+// 如果作为参数的promsie实例自身定义了catch方法 那么它被rejected时并不会触发promise.all（）的catch的方法
 function all(list) {
     return new Promise((resolve, reject) => {
         let resValues = []
         let count = 0
         let len = list.length
-        if(len == 0) return resolve(resValues)
+        if (len == 0) return resolve(resValues)
         for (let [i, p] of list) {
             resolve(p).then(
                 res => {
@@ -95,7 +96,7 @@ promise.all = (list) => {
             item.then(res => {
                 result[index] = res
                 count++
-                if(count == len){
+                if (count == len) {
                     resolve(result)
                 }
             }, err => {
@@ -153,8 +154,8 @@ function diPromiseAll(promises) {
         promises.map((promise, index) => {
             promise.then(res => {
                 result[index] = res
-                count ++
-                if(count == promises.length) resolve(result)
+                count++
+                if (count == promises.length) resolve(result)
             }).catch(err => {
                 reject(err)
             })
@@ -165,9 +166,9 @@ let p1 = Promise.resolve(1),
     p2 = Promise.resolve(2),
     p3 = Promise.resolve(3),
     p4 = Promise.reject('err4')
-    p5 = Promise.reject('err5')
+p5 = Promise.reject('err5')
 
-diPromiseAll([p1,p2,p4]).then(res => {
+diPromiseAll([p1, p2, p4]).then(res => {
     console.log(res)
 }).catch(err => {
     console.log('err', err)
@@ -179,7 +180,7 @@ Promise.race([p4, p2, p1]).then(res => {
     console.log('err-race', err)
 })
 
-function dirace(promises){
+function dirace(promises) {
     return new Promise((resolve, reject) => {
         promises.map((promise, index) => {
             promise.then(res => {
@@ -197,31 +198,32 @@ dirace([p4]).then(res => {
     console.log('diraceerr', err)
 })
 
-Promise.allSettled([p1,p2,p4]).then(res => {
+Promise.allSettled([p1, p2, p4]).then(res => {
     console.log('allsettled', res)
 }).catch(err => {
     console.log('settlederr', err)
 })
 
-function allSettled(promises){
+// map 返回一个新数组  forEach没有返回结果 
+function allSettled(promises) {
     return new Promise((resolve) => {
         let result = []
         let count = 0
         promises.map((promise, index) => {
             promise.then(res => {
                 count++
-                result[index] = { status: 'fulfilled', value: res}
-                if(count == promises.length) resolve(result)
+                result[index] = { status: 'fulfilled', value: res }
+                if (count == promises.length) resolve(result)
             }).catch(err => {
                 count++
                 result[index] = { status: 'rejected', reason: err }
-                if(count == promises.length) resolve(result)
+                if (count == promises.length) resolve(result)
             })
         })
     })
 }
 
-allSettled([p1,p2, p4]).then(res => {
+allSettled([p1, p2, p4]).then(res => {
     console.log('---settle', res)
 })
 
@@ -231,7 +233,7 @@ Promise.any([p1, p5]).then(res => {
     console.log('err-any', err)
 })
 
-function any(promises){
+function any(promises) {
     // 只要有一个resolve 那么久resolve 所有的reject 才变成reject
     return new Promise((resolve, reject) => {
         let count = 0
@@ -240,7 +242,7 @@ function any(promises){
                 resolve(res)
             }).catch(err => {
                 count++
-                if(count == promises.length) reject('所有的请求都是失败的')
+                if (count == promises.length) reject('所有的请求都是失败的')
             })
         })
     })
@@ -251,3 +253,23 @@ any([p5]).then(res => {
 }).catch(err => {
     console.log('err-any--', err)
 })
+
+
+// then方法可以接受两个回调函数作为参数 
+// 第一个回调函数是Promise对象的状态变为Resolved时调用  
+// 第二个回调函数是promise对象的状态变为rejected时调用 其中第二个函数是可选的 不一定提供
+
+// Promise新建后就会立即执行
+// promise的then方法 是定义在promsie的prototype上的
+
+class myPromise {
+    constructor(handle) {
+        if (typeof handle !== 'function') {
+            throw new Error('my promise must accept a function')
+        }
+        this._status = 'Pending'
+        this._value = undefined
+
+        try
+    }
+}
