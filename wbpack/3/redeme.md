@@ -26,3 +26,5 @@
 - 然后在文件内容后面添加injectstylesintostyleTag 代码
 - 
 
+- Compiler 是整个 Webpack 构建过程的协调者和管理者，而 Compilation 则代表了构建过程中的一个具体阶段，即资源和模块的转换过程
+- module 打包之后的产物就是bundle  对于bundle拆分后的东西叫做chunk
