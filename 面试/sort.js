@@ -781,4 +781,55 @@ const newObj = new Proxy(obj, {
 
 // some方法 
 
+// 实现flat方法
+let arr1 = [1, 2, 3, [4, 5, 6, [7, 8, 9, [10, 11]]]]
+// arr.toString().split(',').map(item =>parseFloat(item))
+function flat(arr) {
+    let newArr = []
+    let x = function (arr) {
+        for (let i in arr) {
+            if (Array.isArray(arr[i])) {
+                x(arr[i])
+            } else {
+                newArr.push(arr[i])
+            }
+        }
+    }
+    x(arr)
+    console.log(newArr)
+}
+flat(arr1)
+
+// 数组转树
+// let array = [
+//     { id: 1, parentId: null, name: 'Node 1' },
+//     { id: 2, parentId: 1, name: 'Node 1.1' },
+//     { id: 3, parentId: 1, name: 'Node 1.2' },
+//     { id: 4, parentId: 2, name: 'Node 1.1.1' },
+//     { id: 5, parentId: 2, name: 'Node 1.1.2' },
+//     { id: 6, parentId: null, name: 'Node 2' }
+// ];
+
+function arrayToTree(array) {
+    const map = new Map(); // 用于存储每个节点的引用
+    // 遍历数组，将每个元素映射到map中
+    array.forEach(item => {
+        map.set(item.id, { ...item, children: [] });
+    });
+    // // 遍历数组，将每个元素添加到其父节点的children数组中
+    array.forEach(item => {
+        if (item.parentId !== null) {
+            map.get(item.parentId).children.push(map.get(item.id));
+        }
+    });
+    // // 找到根节点
+    const roots = [];
+    array.forEach(item => {
+        if (item.parentId === null) {
+            roots.push(map.get(item.id));
+        }
+    });
+
+    return roots;
+}
 
