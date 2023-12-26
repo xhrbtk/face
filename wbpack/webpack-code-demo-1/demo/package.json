@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
   "dependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "path": "^0.12.7",
+    "raw-loader": "^4.0.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-sources": "^3.2.3"

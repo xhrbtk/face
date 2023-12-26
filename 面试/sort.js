@@ -326,7 +326,7 @@ class Animal {
 }
 class Dog extends Animal {
     constructor(name, leg) {
-        super()
+        super(leg)
         this.name = name
     }
     say() {
@@ -833,3 +833,6 @@ function arrayToTree(array) {
     return roots;
 }
 
+
+// null == undefined  true   null === undefined false  
+//  null和undefined基本是同义的

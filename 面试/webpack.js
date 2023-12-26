@@ -19,7 +19,7 @@
 
 // compilation对象包含了当前的模块资源 变异生成资源 变化的文件等 当webapck以开发模式运行时 每当检测到一个文件变化 一次新的compilation将被创建
 // compilation对象也提供了很多时间回调供插件做扩展 通过compilation也能读取到compiler对象
-// compiler 和 compilation 的区别在于 compiler代表了整个webpack从过年启动到关闭的生命周期 而comilation只是代表了一次新的编译
+// compiler 和 compilation 的区别在于 compiler代表了整个webpack从启动到关闭的生命周期 而comilation只是代表了一次新的编译
 
 // 缓存
 

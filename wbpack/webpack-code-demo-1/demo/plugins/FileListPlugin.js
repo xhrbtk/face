@@ -3,7 +3,6 @@ class FileListPlugin {
         // 插件配置项  
         this.options = options;
     }
-
     apply(compiler) {
         compiler.hooks.emit.tapAsync('FileListPlugin', (compilation, callback) => {
             // 获取打包后的文件清单  
@@ -25,3 +24,4 @@ class FileListPlugin {
 }
 
 module.exports = FileListPlugin;
+
